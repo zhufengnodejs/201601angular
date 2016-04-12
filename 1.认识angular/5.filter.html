@@ -6,7 +6,8 @@
 </head>
 <body>
 <div style="color:red" ng-show="true" ng-controller="HelloCtrl">
-    <span>{{user.username}}</span>
+   {{name|uppercase}}
+    {{name}}
 </div>
 <script src="../lib/angular/angular.js"></script>
 <script>
@@ -15,12 +16,11 @@
     angular.module('helloAngular',[]);
     //获取定义的模块
     //当定义一个控制器之后，就会送一个$scope={}对象
-    angular.module('helloAngular').controller('HelloCtrl',function($scope,$http){
-        //$http其实是对jquery ajax的封装
-        //这是我们的model也就是数据
-        $http.get('users.json').success(function(data){
-            $scope.user = data;
-        })
+    angular.module('helloAngular').controller('HelloCtrl',function($scope,$http,$timeout){
+        $scope.name = 'zfpx';
+        $timeout(function(){
+            $scope.name= 'timeout';
+        },2000);
     });
 </script>
 </body>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="helloAngular">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+</head>
+<body>
+<div style="width:100px;height:100px" zfpx-color>hello</div>
+
+<script src="../lib/angular/angular.js"></script>
+<script>
+    //定义一个模块
+    //一切从模块开始，其它所有的组件都挂在模块下面
+    angular.module('helloAngular',[]);
+    //获取定义的模块
+    //当定义一个控制器之后，就会送一个$scope={}对象
+    angular.module('helloAngular').controller('HelloCtrl',function($scope){
+        //控制器是用来增强$scope
+        //这是我们的model也就是数据
+        var user = {name:'zfpx'
+        }
+        //$scope叫视图模型
+        $scope.name = user.name+'1';
+        $scope.add = function(a,b){
+            return a+b;
+        }
+    });
+     //组件式指令
+    angular.module('helloAngular').directive('zfpxColor',function(){
+        return {
+          //链接函数
+            /**
+             *
+              * @param scope 代表当前的作用域
+             * @param element 当前要增加的元素 是一个jquery对象
+             * @param attrs 当前元素的所有属性的集合
+             * link是唯一的允许 操作DOM元素的地方
+             */
+          link:function($scope,element,attrs){
+              element.css('color','red');
+                element.on('click',function(){
+                    alert(element.html());
+                });
+          }
+        }
+    });
+</script>
+</body>
+
+</html>
