@@ -1,0 +1,22 @@
+{
+  "name": "201601angular",
+  "homepage": "https://github.com/zhufengnodejs/201601angular",
+  "authors": [
+    "zhangfengnodejs <83687401@qq.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.5.3"
+  }
+}

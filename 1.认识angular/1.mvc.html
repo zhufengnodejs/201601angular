@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="helloAngular">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+</head>
+<body>
+<div style="color:red" ng-show="true" ng-controller="HelloCtrl">
+    <span>{{add(1,2)}}</span>
+    <div>{{add(3,4)}}</div>
+</div>
+<script src="../lib/angular/angular.js"></script>
+<script>
+    //定义一个模块
+    //一切从模块开始，其它所有的组件都挂在模块下面
+    angular.module('helloAngular',[]);
+    //获取定义的模块
+    //当定义一个控制器之后，就会送一个$scope={}对象
+    angular.module('helloAngular').controller('HelloCtrl',function($scope){
+        //这是我们的model也就是数据
+        var user = {name:'zfpx'
+        }
+        //$scope叫视图模型
+        $scope.name = user.name+'1';
+        $scope.add = function(a,b){
+            return a+b;
+        }
+    });
+</script>
+</body>
+
+</html>
