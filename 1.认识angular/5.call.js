@@ -10,10 +10,11 @@ function say(){
 console.log(Function.prototype.call);
 Function.prototype.mycall = function(thisObj){
  var source = this.toString();
- source.replace(/this/,function(result){
+    source = source.replace(/this/,function(result){
     return 'arguments[0]';
  });
+    console.log(source);
  //var func = new Function('thisObj',source);
- eval('+('+source+')('+thisObj+')');
+ eval('('+source+')(thisObj)');
 }
 say.mycall(obj);

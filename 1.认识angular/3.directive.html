@@ -38,8 +38,13 @@
              */
           link:function($scope,element,attrs){
               element.css('color','red');
-                element.on('click',function(){
-                    alert(element.html());
+                element.on('onchange',function(){
+                    $scope.name = element.val();
+                    //监听 scope上name属性的变化
+                    //当发生变化之后调用回调
+                    $scope.$watch('name',function(){
+                        element.val($scope.name);
+                    });
                 });
           }
         }
