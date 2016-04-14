@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod2">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+    <style>
+        div{
+            border:red 1px solid;
+        }
+    </style>
+</head>
+<body>
+<div id="content" ng-controller="zfpxCtrl" >
+{{name}}
+</div>
+<script src="../lib/angular/angular.js"></script>
+<script>
+ angular.module('zfpxMod1',[]);
+ angular.module('zfpxMod1').controller('zfpxCtrl',function($scope){
+     $scope.name = 'zfpxMod1';
+ });
+ angular.module('zfpxMod2',['zfpxMod1']);
+ angular.module('zfpxMod2').controller('zfpxCtrl',function($scope){
+     $scope.name = 'zfpxMod2';
+ });
+
+</script>
+</body>
+
+</html>

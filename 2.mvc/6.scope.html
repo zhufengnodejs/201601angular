@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+    <style>
+        div{
+            border:red 1px solid;
+        }
+    </style>
+</head>
+<body>
+<div id="content" ng-controller="totalCtrl" ng-click="click()" >
+hello
+</div>
+<script src="../lib/angular/angular.js"></script>
+<script>
+ angular.module('zfpxMod',[]);
+ angular.module('zfpxMod').controller('totalCtrl',function($scope){
+    console.log($scope);
+     $scope.click = function(){
+         var s = angular.element(document.querySelector('#content')).data('$scope');
+         console.log(s);
+     }
+ });
+
+
+</script>
+</body>
+
+</html>

@@ -38,6 +38,10 @@
      $scope.$on('add',function(event,num){
          $scope.count = $scope.count +num;
      });
+     console.log($scope);
+     $scope.$emit = function(type){
+
+     }
  });
  angular.module('zfpxMod').controller('grandCtrl',function($scope){
      $scope.child = 'child';
