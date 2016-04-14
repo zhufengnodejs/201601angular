@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+    <style>
+        div{
+            border:red 1px solid;
+        }
+    </style>
+</head>
+<body>
+<div ng-controller="parentCtrl">
+    {{parent}}{{count}}
+    <div ng-controller="childCtrl">
+        {{child}}{{count}}
+        <input type="text" ng-model="num">
+        <button ng-click="$emit('add',num)">向上传递</button>
+        <button ng-click="$broadcast('add',num)">向下传递</button>
+        <div ng-controller="grandCtrl">
+            {{grand}}{{count}}
+        </div>
+    </div>
+</div>
+<script src="../lib/angular/angular.js"></script>
+<script>
+ angular.module('zfpxMod',[]);
+ angular.module('zfpxMod').controller('parentCtrl',function($scope){
+     $scope.parent = 'parent';
+     $scope.count = 0;
+     $scope.$on('add',function(event,num){
+         $scope.count = $scope.count +num;
+     });
+ });
+ angular.module('zfpxMod').controller('childCtrl',function($scope){
+     $scope.count = 0;
+     $scope.child = 'child';
+     $scope.$on('add',function(event,num){
+         $scope.count = $scope.count +num;
+     });
+ });
+ angular.module('zfpxMod').controller('grandCtrl',function($scope){
+     $scope.child = 'child';
+     $scope.count = 0;
+     $scope.$on('add',function(event,num){
+         $scope.count = $scope.count +num;
+     });
+ });
+</script>
+</body>
+
+</html>
