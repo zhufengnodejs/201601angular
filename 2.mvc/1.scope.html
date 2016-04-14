@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+    <style>
+        div{
+            border:red 1px solid;
+        }
+    </style>
+</head>
+<body>
+<div ng-controller="parentCtrl">
+    {{parent}}
+    {{child}}
+    <div ng-controller="childCtrl">
+        {{parent}}
+        {{child}}
+    </div>
+</div>
+<script src="../lib/angular/angular.js"></script>
+<script>
+ angular.module('zfpxMod',[]);
+ angular.module('zfpxMod').controller('parentCtrl',function($scope){
+     $scope.parent = 'parent';
+ });
+ angular.module('zfpxMod').controller('childCtrl',function($scope){
+     $scope.child = 'child';
+ });
+</script>
+</body>
+
+</html>

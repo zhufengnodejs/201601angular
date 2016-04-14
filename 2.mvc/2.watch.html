@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+    <style>
+        div{
+            border:red 1px solid;
+        }
+    </style>
+</head>
+<body ng-init="isShow=true">
+<div  ng-controller="watchCtrl"  ng-if="isShow">
+    <input type="text" zf-model="age">
+    <p>{{age}}</p>
+    <button ng-click="hide()">隐藏</button>
+</div>
+<script src="../lib/angular/angular.js"></script>
+<script>
+ angular.module('zfpxMod',[]);
+ angular.module('zfpxMod').controller('watchCtrl',function($rootScope,$scope,$timeout){
+     //每当age发生变化的时候，回调函执行
+     console.log($scope);
+     $scope.$watch('age',function(newVal,oldVal){
+         console.log(newVal,oldVal);
+     });
+     $scope.hide = function(){
+         $rootScope.isShow = false;
+     }
+     $scope.$on('$destroy',function(){
+         console.log('destroy');
+     });
+ });
+ angular.module('zfpxMod').directive('zfModel',function(){
+     return {
+         link:function(scope,element,attr){
+            //当input value发生变化的时候修改scope上对应的属性
+             element.on('change',function(){
+                 scope[attr['zfModel']] = element.val();
+                 // 强行进行脏值检查
+                 scope.$apply();
+             });
+
+             scope.$watch(attr['zfModel'],function(newVal){
+                 element.val(newVal);
+             });
+         }
+     }
+ });
+</script>
+</body>
+
+</html>
