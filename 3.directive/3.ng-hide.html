@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="zfpxCtrl">
+<div ng-init="show=false">
+    <button ng-click="change()">显示/隐藏</button>
+    <div ng-hide="show">
+        内容
+    </div>
+</div>
+
+</body>
+<script src="../lib/angular/angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]);
+    angular.module('zfpxMod').controller('zfpxCtrl',function($scope){
+        $scope.change = function(){
+            $scope.show = !$scope.show;
+        }
+    });
+</script>
+</html>

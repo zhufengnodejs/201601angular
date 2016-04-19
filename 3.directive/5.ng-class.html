@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.css">
+</head>
+<body ng-controller="zfpxCtrl">
+<ul class="nav nav-tabs">
+    <li ng-click="selectedMenu = 'Home'" role="presentation" ng-class="{active:selectedMenu == 'Home'}"><a href="#">Home</a></li>
+    <li  ng-click="selectedMenu = 'Profile'" role="presentation" ng-class="{active:selectedMenu == 'Profile'}"><a href="#">Profile</a></li>
+    <li ng-click="selectedMenu = 'Messages'" role="presentation" ng-class="{active:selectedMenu == 'Messages'}"><a href="#">Messages</a></li>
+</ul>
+<div class="container">
+    <form action="">
+        <div class="form-group" ng-class="{'has-error':username.length<=3,'has-warning':username.length<=6,'has-success':username.length>6}">
+            <label class="control-label" for="username">用户名</label>
+            <input class="form-control" type="text" id="username" ng-model="username" >
+        </div>
+    </form>
+</div>
+
+</body>
+<script src="../lib/angular/angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]);
+    angular.module('zfpxMod').controller('zfpxCtrl',function($scope){
+        $scope.selectedMenu = 'Home';
+        $scope.phones = [
+            {name:'三儿子',age:'1'},
+            {name:'huawei',age:'2'},
+            {name:'xiaomi',age:'3'}
+        ]
+    });
+</script>
+</html>
