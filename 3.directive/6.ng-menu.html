@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.css">
+</head>
+<body ng-controller="zfpxCtrl">
+<ul class="nav nav-tabs">
+    <li ng-repeat="menu in menus" ng-click="click(menu.name)" role="presentation" ng-class="{active:selectedMenu == menu.name}"><a href="#">{{menu.name}}</a></li>
+</ul>
+<div class="container">
+    <form action="">
+        <div class="form-group" ng-class="{'has-error':username.length<=3,'has-warning':username.length<=6,'has-success':username.length>6}">
+            <label class="control-label" for="username">用户名</label>
+            <input class="form-control" type="text" id="username" ng-model="username" >
+        </div>
+    </form>
+</div>
+
+</body>
+<script src="../lib/angular/angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]);
+    angular.module('zfpxMod').controller('zfpxCtrl',function($scope){
+        $scope.selectedMenu = 'Home';
+        $scope.menus = [
+            {name:'Home'},
+            {name:'Profile'},
+            {name:'Message'}
+        ]
+        $scope.click = function(name){
+            $scope.selectedMenu = name;
+        }
+    });
+</script>
+</html>

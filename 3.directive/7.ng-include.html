@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.css">
+</head>
+<body ng-controller="zfpxCtrl">
+ <div ng-include="'header.html'"></div>
+</body>
+<script src="../lib/angular/angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]);
+    angular.module('zfpxMod').controller('zfpxCtrl',function($scope){
+        $scope.selectedMenu = 'Home';
+        $scope.menus = [
+            {name:'Home'},
+            {name:'Profile'},
+            {name:'Message'}
+        ]
+        $scope.click = function(name){
+            $scope.selectedMenu = name;
+        }
+    });
+</script>
+</html>
