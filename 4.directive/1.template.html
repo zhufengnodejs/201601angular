@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<student></student><br/>
+<span student></span><br/>
+<span class="student"></span><br/>
+<!-- directive:student -->
+</body>
+<script src="../lib/angular/angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]);
+    angular.module('zfpxMod').directive('student',function(){
+        return {
+            // A Attribute 属性  E element 元素 M Commnent注释  C class 类名
+            restrict:'AEMC',//限定指令出现的位置AEMC
+            replace:true,// 会把指令本身替换掉
+            template:'<div>name:zfpx</div>'
+        }
+    });
+</script>
+</html>

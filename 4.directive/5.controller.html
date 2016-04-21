@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.css">
+</head>
+<body class="container" ng-controller="zfpxCtrl">
+
+ <girl kind="beautiful,clever"></girl>
+</body>
+<script src="../lib/angular/angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]);
+    angular.module('zfpxMod').controller('zfpxCtrl',function($scope){
+
+    });
+    //过滤器服务的名字就是 过滤器名字+Filter
+    angular.module('zfpxMod').directive('girl',function(){
+        return {
+            restrict:'E',
+            scope:true,
+            // link用来将指令隔离开来  controller用来定义可以复用的行为和可以提供给别的指令调用方法
+            //控制里命名是死的，是依赖注入进来的
+            controller:function($scope,$element,$attrs){
+                $scope.kinds = [];
+                 this.add = function(kind){
+                     $scope.kinds.push(kind);
+                 }
+            },
+
+            template:'<div >{{kinds}}</div>',
+            //link里是形参，可以随便写，
+            link:function($scope,element,attrs){
+                element.bind('click',function(){
+                    alert($scope.kinds);
+                });
+            }
+
+        }
+    });
+        //前缀查找，可以修改查找控制器的行为
+       //  1. ? 如果同级找不到，会赋null
+        // 2. ^ 在同级和上级中查找指令
+        // 3. ^? 在同级和上级中查找指令,找不到会赋于null
+        // 4. 没有前缀 在同级中查找，找不到会报错
+    angular.module('zfpxMod').directive('kind',function(){
+        return {
+            require:'^?girl',//表示当前指令依赖的其它指令
+            link:function(scope,element,attrs,girlCtrl){
+                attrs.kind.split(',').forEach(function(kind){
+                    girlCtrl.add(kind);
+                });
+
+            }
+        }
+    })
+
+
+</script>
+</html>

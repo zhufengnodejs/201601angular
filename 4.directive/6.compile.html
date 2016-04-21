@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.css">
+</head>
+<body class="container" ng-controller="zfpxCtrl">
+<div times="4">
+    <span>{{word}}</span>
+</div>
+<div times="4">
+    <span>{{word}}</span>
+</div>
+</body>
+<script src="../lib/angular/angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]);
+    angular.module('zfpxMod').controller('zfpxCtrl',function($scope){
+
+    });
+    //过滤器服务的名字就是 过滤器名字+Filter
+    angular.module('zfpxMod').directive('times',function(){
+        return {
+            restrict:'A',
+            //编译函数，对DOM模板进行编译，tempate替换之后，scope链接link函数执行前
+            compile:function(element,attrs){
+                console.log('开始compile');
+                var tpl = element.children();
+                for(var i=0;i< attrs.times-1;i++){
+                    element.append(tpl.clone());
+                }
+                return function(scope,element,attrs){
+                    scope.word = 'hello1';
+                    console.log('compile链接函数',scope.word );
+                }
+            },
+            link:function(scope,element,attrs){
+                scope.word = 'hello2';
+                console.log('链接函数');
+            }
+        }
+    });
+
+</script>
+</html>
