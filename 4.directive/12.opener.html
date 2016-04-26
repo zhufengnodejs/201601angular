@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .title{
+            width:100px;
+            height:30px;
+            border: solid red 1px;
+            background-color: red;
+        }
+        .content{
+            width:100px;
+            height:100px;
+            border: solid blue 1px;
+            background-color: orange;
+        }
+    </style>
+</head>
+<body class="container" ng-controller="zfpxCtrl">
+ <opener title="title">
+     {{content}}
+ </opener>
+</div>
+</body>
+<script src="../lib/angular/angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]);
+    angular.module('zfpxMod').controller('zfpxCtrl',function($scope){
+        $scope.title = '标题';
+        $scope.content = '内容';
+    });
+
+    angular.module('zfpxMod').directive('opener',function(){
+        return {
+            restrict:'E',
+            replace:true,
+            transclude:true,
+            scope:{
+                title:'='
+            },
+            templateUrl:'tmpl.html',
+            link:function(scope,element,attr){
+
+            }
+        }
+    })
+</script>
+</html>

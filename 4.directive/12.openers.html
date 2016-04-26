@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .title {
+            width: 100px;
+            height: 30px;
+            border: solid red 1px;
+            background-color: red;
+        }
+
+        .content {
+            width: 100px;
+            height: 100px;
+            border: solid blue 1px;
+            background-color: orange;
+        }
+    </style>
+</head>
+<body class="container" ng-controller="zfpxCtrl">
+<group>
+    <opener ng-repeat="opener in openers" title="opener.title">
+        {{opener.content}}
+    </opener>
+</group>
+</div>
+</body>
+<script src="../lib/angular/angular.js"></script>
+<script>
+    angular.module('zfpxMod', []);
+    angular.module('zfpxMod').controller('zfpxCtrl', function ($scope) {
+        $scope.openers = [
+            {
+                title: '标题1',
+                content: '内容1'
+            }, {
+                title: '标题2',
+                content: '内容2'
+            }
+        ]
+    });
+    angular.module('zfpxMod').directive('group', function () {
+        return {
+            restrict:'E',
+            replace:true,
+            transclude:true,
+            template:'<div ng-transclude></div>',
+           controller:function(){
+               //构建一个数组
+               var openers = [];
+               //提供一个注册openers scope的方法
+               this.addOpener = function(opener){
+                   openers.push(opener);
+               }
+               //代理opener的点击事件
+               this.open = function(selecteOpener){
+                   angular.forEach(openers,function(opener){
+                       if(selecteOpener!=opener)
+                       opener.show = false;
+                   });
+                   selecteOpener.show = !selecteOpener.show;
+               }
+           }
+        }
+    })
+    angular.module('zfpxMod').directive('opener', function () {
+        return {
+            restrict: 'E',
+            replace: true,
+            transclude: true,
+            require:'^group',
+            scope: {
+                title: '='
+            },
+            templateUrl: 'tmpls.html',
+            link: function (scope, element, attr,groupCtrl) {
+                //把自己的scope注册到上级指令中
+                groupCtrl.addOpener(scope);
+                //当点击标题的时候执行此方法
+                scope.toggle = function(){
+                    groupCtrl.open(scope);
+                }
+            }
+        }
+    })
+</script>
+</html>
