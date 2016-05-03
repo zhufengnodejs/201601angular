@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div class="alert alert-danger">
+    {{message}}
+</div>
+<div ng-controller="zfpxCtrl">
+
+</div>
+<script src="../lib/angular/angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]);
+    angular.module('zfpxMod').config(function($httpProvider){
+        $httpProvider.interceptors.push('zfInterceptor');
+    });
+    angular.module('zfpxMod').controller('zfpxCtrl',function($http){
+        //confi就是请求的配置对象
+        $http.get('http://localhost:8080').success(function(data,status,headers,config){
+                console.log(arguments);
+        }).error(function(){
+            console.error(arguments);
+        }).then(function(response){
+            console.log(response);
+        });
+    });
+    angular.module('zfpxMod').factory('zfInterceptor',function($rootScope){
+        return {
+            // 会在$http发送到后台之前执行，在这里你可以修改配置
+            // 接收配置对象作为参数，然后必须返回配置对象或者promise
+            //如果返回无效的配置对象，或者promise 拒绝，$http调用失败
+            'request':function(config){
+                console.log('request');
+                return config;
+            },
+            //该方法会在http接收到后台的响应时执行，你可以修改响应
+            //接收响应对象作为参数，必须返回响应对象或者 promise
+            //响应对象包括了请求配置，请求头 状态和响应体
+            'response':function(response){
+              /*  response.data[0].name = response.data[0].name.toUpperCase();*/
+                console.log('response');
+                return response;
+            },
+            //请求发送失败或被拦截器拒绝会调用回调
+            //
+            'requestError':function(rejection){
+                console.log('requestError');
+            },
+            //如果后台响应失败了，
+            'responseError':function(rejection){
+                switch(rejection.status){
+                    case 401:console.log('需要登陆');
+                    case 403:console.log('没有权限');
+                    case 404:console.log('找不到页面');
+                    case 500:$rootScope.message = '没有权限';
+                }
+                console.log('responseError');
+            }
+        }
+    });
+</script>
+</body>
+</html>

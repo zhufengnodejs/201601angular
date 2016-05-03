@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div ng-controller="zfpxCtrl">
+
+</div>
+<script src="../lib/angular/angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]);
+    angular.module('zfpxMod').config(function($provide){
+        $provide.decorator('$log',function($delegate){
+            angular.forEach(['log','debug','info','warn','error'],function(method){
+                $delegate[method] =    decorate($delegate[method]);
+            });
+            function decorate(method){
+                return function(){
+                    var args = Array.prototype.slice.call(arguments);
+                    args.unshift(new Date().toLocaleString());
+
+                    method.apply(null,args);
+                }
+            }
+            return $delegate;
+        })
+    });
+    angular.module('zfpxMod').controller('zfpxCtrl',function($log){
+        var date = new Date().toLocaleString();
+       $log.debug('deubg');
+        $log.error('error');
+        $log.info('info');
+        $log.warn('warn');
+        $log.log('log');
+    });
+</script>
+</body>
+</html>

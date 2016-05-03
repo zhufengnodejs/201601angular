@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+
+<ul class="list-group" keyword="zfpx">
+  <li class="list-group-item" ng-repeat="item in items">{{item}}</li>
+</ul>
+
+</div>
+<script src="../lib/angular/angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]);
+    angular.module('zfpxMod').directive('keyword',function($http,$window){
+            return {
+                link:function(scope,element,attr){
+                    $http.jsonp('http://suggestion.baidu.com/su?wd='+attr['keyword']+'&cb=xxx');
+                    $window.xxx = function(data){
+                        scope.items = data.s;
+                    }
+                }
+            }
+    });
+</script>
+</body>
+</html>

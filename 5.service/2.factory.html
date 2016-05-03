@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div class="container">
+  <div class="row" ng-controller="zfpxCtrl as vm">
+        <div class="col-xs-4 col-xs-offset-4">
+            <input type="text" class="form-control" ng-model="vm.a">
+            <select name="" id="" ng-model="vm.operate"  class="form-control" >
+                <options>
+                    <option value="+">+</option>
+                    <option value="-">-</option>
+                    <option value="*">*</option>
+                    <option value="/">/</option>
+                </options>
+            </select>
+            <input type="text" ng-model="vm.b"  class="form-control" >
+            <button class="btn btn-primary" ng-click="vm.doCal()">=</button>
+            <div ng-bind="vm.result"></div>
+        </div>
+    </div>
+</div>
+
+<script src="../lib/angular/angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]);
+    angular.module('zfpxMod').factory('zfCalculator',function(){
+        var prefix = '$';
+        return {
+            '+':function(a,b){return prefix+(parseInt(a)+parseInt(b))},
+            '-':function(a,b){return prefix+parseInt(a-b)},
+            '*':function(a,b){return prefix+parseInt(a*b)},
+            '/':function(a,b){return prefix+parseInt(a/b)}
+        }
+    });
+   /* angular.module('zfpxMod').config(function(zfCalculatorProvider){
+        zfCalculatorProvider.setPrefix('¥');
+    });*/
+    angular.module('zfpxMod').controller('zfpxCtrl',function(zfCalculator){
+        var vm = this;
+        vm.doCal = function(){
+            vm.result = zfCalculator[vm.operate](vm.a,vm.b);
+        }
+    });
+</script>
+</body>
+</html>
