@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div class="container" ng-init="users = [{name:'zfpx',age:6},{name:'zfpx2',age:7}]">
+  <div class="row">
+  {{99.999|currency}}
+  {{count}}
+   姓名 <input type="text" ng-model="search.name">
+   年龄 <input type="text" ng-model="search.$">
+   <button ng-click="order = 'age'">升序</button>
+      <button ng-click="order = '-age'">降序</button>
+   <table class="table table-responsive">
+       <tr>
+           <td>姓名</td>
+           <td>年龄</td>
+       </tr>
+       <tr ng-repeat="user in users | orderBy:order">
+           <td>{{user.name}}</td>
+           <td>{{user.age}}</td>
+       </tr>
+   </table>
+  </div>
+</div>
+
+<script src="../lib/angular/angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]);
+</script>
+</body>
+</html>

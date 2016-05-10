@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.css">
+</head>
+<body ng-controller="zfpxCtrl">
+<div class="container">
+  <div class="row">
+    {{total | nc:1:'人民币'}}
+  </div>
+</div>
+
+<script src="../lib/angular/angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]);
+    angular.module('zfpxMod').controller('zfpxCtrl',function($scope,numberFilter,currencyFilter){
+        $scope.total=  888.888;
+    });
+    angular.module('zfpxMod').filter('nc',function(currencyFilter,numberFilter){
+        return function(input,limit,prefix){
+            return currencyFilter(numberFilter( "888.888",limit),prefix);
+        }
+    });
+</script>
+</body>
+</html>
