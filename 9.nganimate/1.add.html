@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="animateMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box{
+            width:200px;
+            height:200px;
+            background-color: green;
+            position: absolute;
+            transition: 1s all;
+        }
+        .box.ng-enter{
+            opacity: 0;
+        }
+        .box.ng-enter-active{
+            opacity: 1;
+        }
+        .box.ng-leave{
+            opacity: 1;
+        }
+        .box.ng-leave-active{
+            opacity: 0;
+        }
+    </style>
+</head>
+<body ng-controller="animateCtrl">
+<input type="checkbox" ng-model="check">
+<div class="box" ng-if="check">
+    hello
+</div>
+</body>
+<script src="angular.js"></script>
+<script src="//cdn.bootcss.com/angular.js/1.5.3/angular-animate.js"></script>
+<script>
+    angular.module('animateMod',['ngAnimate']);
+    angular.module('animateMod').controller('animateCtrl',function(){
+
+    });
+</script>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="uiMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="zfpxCtrl">
+<button ng-click="goUsers()">users</button>
+<ul>
+    <li><a ui-sref="index">index</a></li>
+    <li><a ui-sref="users">users</a></li>
+</ul>
+<div ui-view></div>
+</body>
+<script src="../angular.js"></script>
+<script src="../angular-ui-router.js"></script>
+<script>
+    angular.module('uiMod',['ui.router']);
+    angular.module('uiMod').controller('zfpxCtrl',function($scope,$state){
+        $scope.goUsers = function(){
+            $state.go('users333');
+        }
+    });
+    angular.module('uiMod').run(function($rootScope,$state){
+        /*$rootScope.$on('$stateChangeStart',function(event,toState,toParams,fromState,fromParams){
+            if(toState.need_login){
+                if(!$rootScope.me){
+                    alert('你还没登陆');
+                    event.preventDefault();
+                    $state.go('index');
+                    return;
+                }
+            }
+        });*/
+        $rootScope.$on('$stateNotFound',function(event,toState,toParams,fromState,fromParams){
+            alert('状态无效');
+            $state.go('index');
+        });
+        $rootScope.$on('$stateChangeError',function(event,toState,toParams,fromState,fromParams){
+            alert('切换出错了');
+            $state.go('index');
+        });
+
+    });
+
+    angular.module('uiMod').config(function($stateProvider,$urlRouterProvider){
+        $urlRouterProvider.otherwise('/index');
+        $stateProvider.state('index',{
+            url:'/index',
+            template:'<h1>hello world</h1>'
+        }).state('users',{
+            url:'/users',
+            templateUrl:'3users.html',
+            controller:function($scope,$http,title,users){
+                $scope.title = title.name;
+                $scope.users = users;
+
+            },
+            need_login:true,//状态的自定义属性
+            onEnter:function(){
+                alert('进入用户路由');
+            },
+            onExit:function(){
+                alert('退出用户路由');
+            },
+            //定义二个服务，服务可以是同步，也可是异步，可以返回对象，也可以返回promise
+            resolve:{
+                title:function(){
+                    return {name:'用户列表'}
+                },
+                users:function($q,$timeout){
+                    var defer = $q.defer();
+                    $timeout(function(){
+                        defer.resolve(['zfpx1','zfpx2']);
+                       // defer.reject('失败');
+                    },100);
+                    return defer.promise;
+                }
+            }
+        });
+    });
+
+
+</script>
+</html>

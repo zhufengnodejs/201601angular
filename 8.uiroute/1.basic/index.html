@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="uiMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="zfpxCtrl">
+<button ng-click="goUsers()">users</button>
+<ul>
+    <li><a ui-sref="index">index</a></li>
+    <li><a ui-sref="users">users</a></li>
+</ul>
+<div ui-view></div>
+</body>
+<script src="../angular.js"></script>
+<script src="../angular-ui-router.js"></script>
+<script>
+    angular.module('uiMod',['ui.router']);
+    angular.module('uiMod').controller('zfpxCtrl',function($scope,$state){
+        $scope.goUsers = function(){
+            $state.go('users');
+        }
+    });
+    angular.module('uiMod').config(function($stateProvider,$urlRouterProvider){
+        $urlRouterProvider.otherwise('/index');
+        $stateProvider.state('index',{
+            url:'/index',
+            template:'<h1>hello world</h1>'
+        }).state('users',{
+            url:'/users',
+            templateUrl:'users.html',
+            controller:function($scope,$http,$q){
+               /* return $http.get('users.json').then(function(data){
+                    console.log(data);
+                    $scope.users =  data.data;
+                });*/
+
+            }
+        });
+    });
+</script>
+</html>

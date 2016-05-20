@@ -5,13 +5,15 @@
     <title>Title</title>
     <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.css">
 </head>
-<body>
+<body ng-controller="zfpxCtrl">
 <ul>
-    <a href="/index">index</a>
-    <a href="#/user">user</a>
+    <a href="#/index">index</a>
+    <a href="#/users">users</a>
     <a href="#/book">book</a>
+    <a href="#/settings">settings</a>
 </ul>
-<div yx-view></div>
+<button ng-click="goUser()">登陆</button>
+<div ng-view></div>
 <script src="../lib/angular/angular.js"></script>
 <script src="angular-route.js"></script>
 <script>
@@ -26,19 +28,56 @@
     angular.module('zfpxMod').controller('bookCtrl',function($scope){
         $scope.title = 'world';
     });
+    angular.module('zfpxMod').controller('zfpxCtrl',function($scope,$location){
+        $scope.goUser = () => {
+            $location.path('user');
+        }
+    });
+    //配置
     angular.module('zfpxMod').config(function($routeProvider){
-        $routeProvider.when('/',{
+        $routeProvider.when('/index',{
             template:'index'
-        }).when('/user',{
-            templateUrl:'user.html',
+        }).when('/users',{
+            templateUrl:'users.html',
             controller:function($scope){
-                $scope.title = 'hello';
+                $scope.title = '用户列表';
+                $scope.users = [
+                    {id:1,name:'zfpx1'},
+                    {id:2,name:'zfpx2'},
+                    {id:3,name:'zfpx3'}
+                ]
             }
         }).when('/book',{
             template:'{{title}}',
             controller:'bookCtrl'
+        }).when('/settings',{
+            template:'settings',
+        }).when('/user/:id',{
+            template:'{{id}}',
+            controller:function($scope,$routeParams){
+                $scope.id = $routeParams.id;
+            }
         }).otherwise({
             redirectTo:'/'
+        });
+    });
+    //这是系统启动后的第一个方法
+    angular.module('zfpxMod').run(function($rootScope,$route){
+        $rootScope.$on('$routeChangeStart',function(event,to,from){
+            console.log($route);
+            console.log(event);
+            console.log(from);
+            console.log(to);
+            if(to.$$route.originalPath == '/settings'){
+                //用户登陆之后会把用户信息赋给$rootScope.me
+                if($rootScope.me){
+
+                }else{
+                    alert('禁止访问');
+                    event.preventDefault();
+                    return false;
+                }
+            }
         });
     });
 </script>
