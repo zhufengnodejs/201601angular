@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body id="bb" ng-app="zfpxMod">
+<div ng-controller="zfpxCtrl">
+    <button ng-click="show()">显示</button>
+</div>
+</body>
+<script src="angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]).provider('hello',function(){
+        //必须提供一个$get的方法
+        this.$get  = function(){
+            return 'hello';
+        }
+    })
+
+    angular.module('zfpxMod').controller('zfpxCtrl',function($scope){
+        $scope.show = function(){
+            //获取angular自行启动后创建的注入器
+               var injector =  angular.element(document.querySelector('#bb')).data('$injector');
+            //实例化参数对象并且执行此函数
+            injector.invoke(function(hello){
+                console.log(hello);
+            });
+            //获取对应的服务实例
+            var hello = injector.get('hello');
+            console.log(hello);
+            //把形参签名转成字符串数组
+   var args = injector.annotate(function(a,b){
+                     console.log('annotate')
+            });
+            console.log(args);
+
+            console.log(injector.has('$http'));
+            console.log(injector.has('hello'));
+            console.log(injector.has('hello250'));
+
+            var obj = injector.instantiate(function(hello){
+                this.hello = hello;
+            });
+            console.log(obj);
+        }
+    });
+
+</script>
+</html>
