@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="zfpxCtrl">
+<div ng-repeat="name in names">
+    <div times="2">
+        <span>{{name}}</span>
+    </div>
+</div>
+</body>
+<script src="../11.注射器/angular.js"></script>
+<script>
+  angular.module('zfpxMod',[]);
+  angular.module('zfpxMod').controller('zfpxCtrl',function($scope,$timeout){
+      $scope.names= ['1','2'];
+  });
+
+  angular.module('zfpxMod').directive('times',function(){
+      return {
+          compile:function(element,attrs){
+              console.log('compile.....');
+              var child = element.children();
+              for(var i=1;i<attrs['times'];i++){
+                element.append(child.clone());
+              }
+              return function(scope,element,attr){
+                  console.log('compile link');
+              }
+          },
+          //如果写了compile函数，必须返回一个link函数，它会覆盖外面定义的link函数
+          link:function(scope,element,attr){
+              console.log('link');
+          }
+      }
+  });
+</script>
+</html>

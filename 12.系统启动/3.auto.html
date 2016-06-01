@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div ng-app="zfpxMod">
+    <div ng-controller="zfpxCtrl">
+        {{name}}
+    </div>
+</div>
+<div id="second" >
+    <div ng-controller="zfpxCtrl">
+        {{name}}
+    </div>
+</div>
+<button onclick="start()">启动</button>
+<lufy></lufy>
+</body>
+<script src="../11.注射器/angular.js"></script>
+<script>
+  function start(){
+        var second = document.querySelector('#second');
+      angular.bootstrap(second,['zfpxMod']);
+  }
+  angular.module('zfpxMod',[]);
+  angular.module('zfpxMod').controller('zfpxCtrl',function($scope){
+      $scope.name = 'only';
+      console.log('cccc')
+  });
+  angular.module('zfpxMod').directive('lufy',function(){
+      return {
+          restrict:'E',
+          replace:true,
+          template:'<img src="http://pic19.nipic.com/20120322/3547369_171516629146_2.jpg" style="width:200px;height:300px"/>'
+      }
+  });
+</script>
+</html>
